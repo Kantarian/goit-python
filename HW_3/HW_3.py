@@ -4,12 +4,16 @@ import shutil
 from os import path
 filename=glob.glob("D:/Python/goit-python/HW_3/Trash/*")
 documents=['.pdf','.docx','.doc','.txt']
-media=['.jpeg','.jpg','.svg','.png','.PNG','.mp4','.mp3']
+photo=['.jpeg','.jpg','.PNG']
+media=['mp3', 'ogg', 'wav', 'amr']
+video=['AVI', 'MP4', 'MOV']
 setupFiles=['.exe','.msi']
 compressedFiles=['.zip']
 files=['.apk']
 DocumentsLocation='D:/Python/goit-python/HW_3/Trash/documents'
 mediaLocation='D:/Python/goit-python/HW_3/Trash/media'
+photoLocation='D:/Python/goit-python/HW_3/Trash/media'
+videoLocation='D:/Python/goit-python/HW_3/Trash/media'
 setupFilesLocation='D:/Python/goit-python/HW_3/Trash/setupFiles'
 compressedFilesLocation='D:/Python/goit-python/HW_3/Trash/compressedFiles'
 FilesLocation='D:/Python/goit-python/HW_3/Trash/Files'
@@ -44,3 +48,15 @@ for file in filename:
         else:
             os.mkdir(FilesLocation)
             shutil.move(file,FilesLocation)
+    if os.path.splitext(file)[1] in video:
+        if(path.exists(videoLocation)):
+            shutil.move(file,videoLocation)
+        else:
+            os.mkdir(videoLocation)
+            shutil.move(file,videoLocation)
+    if os.path.splitext(file)[1] in photo:
+        if(path.exists(photoLocation)):
+            shutil.move(file,photoLocation)
+        else:
+            os.mkdir(photoLocation)
+            shutil.move(file,photoLocation)
