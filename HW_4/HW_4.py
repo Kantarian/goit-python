@@ -12,7 +12,7 @@ def folder_sort(adress):
     media = ['.mp3', '.ogg', '.wav', '.amr']
     video = ['.avi', '.mp4', '.mov', '.mkv']
     compressedFiles = ['.zip', '.gz', '.tar']
-    folder = ['',' ','_']
+    folder = ['']
     standard_folder = ['documents','photo','media','video','compressedFiles','elseLocation']
     otherfile = documents + photo + media + video + compressedFiles + folder
     DocumentsLocation = 'D:/Python/goit-python/goit-python/HW_4/Trash/documents'
@@ -23,12 +23,12 @@ def folder_sort(adress):
     elseLocation = 'D:/Python/goit-python/goit-python/HW_4/Trash/elseLocation'
     main_format = {'None'}
     unknown_format = {'None'}
-    x = next(os.walk('D:/Python/goit-python/goit-python/HW_4/Trash'))[1]
+    folder_list = next(os.walk('D:/Python/goit-python/goit-python/HW_4/Trash'))[1]
     for file in filename:
         if os.path.splitext(file)[1].lower() in otherfile:
             mainf = str(os.path.splitext(file)[1])
             if mainf == '':
-                for m in mainf:
+                for m in folder_list:
                     a = str(m)
                     main_format.add(a)
             if mainf != '':
@@ -63,7 +63,7 @@ def folder_sort(adress):
                 else:
                     os.mkdir(compressedFilesLocation)
                     shutil.move(file, compressedFilesLocation)
-            for y in x:
+            for y in folder_list:
                 if y not in standard_folder:
                     folder_name = adress + str(y) + '/'
                     print(folder_name)
@@ -77,18 +77,18 @@ def folder_sort(adress):
                 os.mkdir(elseLocation)
                 shutil.move(file,elseLocation)
     if path.exists(DocumentsLocation):
-        print(os.listdir(DocumentsLocation))
+        print(f'Ducument: {os.listdir(DocumentsLocation)}')
     if path.exists(mediaLocation):
-        print(os.listdir(mediaLocation))
+        print(f'media: {os.listdir(mediaLocation)}')
     if path.exists(photoLocation):
-        print(os.listdir(photoLocation))
+        print(f'photo:  {os.listdir(photoLocation)}')
     if path.exists(videoLocation):
-        print(os.listdir(videoLocation))
+        print(f'video:  {os.listdir(videoLocation)}')
     if path.exists(compressedFilesLocation):
-        print(os.listdir(compressedFilesLocation))
+        print(f'compressedFiles: {os.listdir(compressedFilesLocation)}')
     if path.exists(elseLocation):
-        print(os.listdir(elseLocation))
-    print(main_format)
-    print(unknown_format)
+        print(f'else:  {os.listdir(elseLocation)}')
+    print(f'main format in folder: {main_format}')
+    print(f'unknown format in folder: {unknown_format}')
 
 folder_sort('D:/Python/goit-python/goit-python/HW_4/Trash/')
