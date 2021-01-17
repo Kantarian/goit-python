@@ -23,7 +23,7 @@ def folder_sort(adress):
     elseLocation = 'D:/Python/goit-python/goit-python/HW_4/Trash/elseLocation'
     main_format = {'None'}
     unknown_format = {'None'}
-    folder_list = next(os.walk('D:/Python/goit-python/goit-python/HW_4/Trash'))[1]
+    folder_list = next(os.walk(adress))[1]
     for file in filename:
         if os.path.splitext(file)[1].lower() in otherfile:
             mainf = str(os.path.splitext(file)[1])
@@ -31,7 +31,7 @@ def folder_sort(adress):
                 for m in folder_list:
                     a = str(m)
                     main_format.add(a)
-            if mainf != '':
+            else:
                 main_format.add(mainf)
             if os.path.splitext(file)[1].lower() in documents:
                 if(path.exists(DocumentsLocation)):
@@ -66,7 +66,6 @@ def folder_sort(adress):
             for y in folder_list:
                 if y not in standard_folder:
                     folder_name = adress + str(y) + '/'
-                    print(folder_name)
                     folder_sort(folder_name)
         else:
             unknown = str(os.path.splitext(file)[1])
