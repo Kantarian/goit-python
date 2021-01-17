@@ -2,7 +2,7 @@ import os
 import glob
 import shutil
 from os import path
-filename=glob.glob("D:/Python/goit-python/HW_3/Trash/*")
+filename=glob.glob("D:/Python/goit-python/goit-python/HW_3/Trash/*")
 documents=['.pdf','.docx','.doc','.txt']
 photo=['.jpeg','.jpg','.PNG']
 media=['mp3', 'ogg', 'wav', 'amr']
@@ -10,6 +10,7 @@ video=['AVI', 'MP4', 'MOV']
 setupFiles=['.exe','.msi']
 compressedFiles=['.zip']
 files=['.apk']
+<<<<<<< Updated upstream
 DocumentsLocation='D:/Python/goit-python/HW_3/Trash/documents'
 mediaLocation='D:/Python/goit-python/HW_3/Trash/media'
 photoLocation='D:/Python/goit-python/HW_3/Trash/media'
@@ -17,6 +18,15 @@ videoLocation='D:/Python/goit-python/HW_3/Trash/media'
 setupFilesLocation='D:/Python/goit-python/HW_3/Trash/setupFiles'
 compressedFilesLocation='D:/Python/goit-python/HW_3/Trash/compressedFiles'
 FilesLocation='D:/Python/goit-python/HW_3/Trash/Files'
+=======
+DocumentsLocation='D:/Python/goit-python/goit-python/HW_3/Trash/documents'
+mediaLocation='D:/Python/goit-python/goit-python/HW_3/Trash/media'
+photoLocation='D:/Python/goit-python/goit-python/HW_3/Trash/media'
+videoLocation='D:/Python/goit-python/goit-python/HW_3/Trash/media'
+setupFilesLocation='D:/Python/goit-python/goit-python/HW_3/Trash/setupFiles'
+compressedFilesLocation='D:/Python/goit-python/goit-python/HW_3/Trash/compressedFiles'
+FilesLocation='D:/Python/goit-python/goit-python/HW_3/Trash/Files'
+>>>>>>> Stashed changes
 for file in filename:
     if os.path.splitext(file)[1] in documents:
         if(path.exists(DocumentsLocation)):
@@ -59,4 +69,8 @@ for file in filename:
             shutil.move(file,photoLocation)
         else:
             os.mkdir(photoLocation)
+<<<<<<< Updated upstream
             shutil.move(file,photoLocation)
+=======
+            shutil.move(file,photoLocation)
+>>>>>>> Stashed changes
