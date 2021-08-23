@@ -10,7 +10,7 @@ class AddressBook(UserDict):
 
 
 
-class Record(AddressBook):
+class Record():
     phones = []
     emails = []
     names = []
@@ -49,11 +49,11 @@ class Record(AddressBook):
 class Field():
     pass
 
-class Name():
+class Name(Field):
     name = ''
     def __init__(self, name):
         self.name = name
 
-class Phone():
+class Phone(Field):
     def add_phone (self, phone):
         self.phone = phone
