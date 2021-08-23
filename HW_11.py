@@ -1,7 +1,5 @@
 from collections import UserDict
 from datetime import *
-from os import path
-from typing import NoReturn
 
 class AddressBook(UserDict):
     id = 0
