@@ -184,7 +184,11 @@ if __name__ == "__main__":
             if answer == "y":
                 tags = str(input("Enter tags:> "))
                 print(noter.add(name, text, tags))
-            print(noter.add(name, text))
+            elif answer == "n":
+                print(noter.add(name, text))
+            else:
+                print("Incorrect answer. Default mode is a new note without tag")
+                print(noter.add(name, text, tags))
         if command == "show":
             print("Choosing the note to show...")
             name = str(input("Enter name:> "))
@@ -196,3 +200,19 @@ if __name__ == "__main__":
             break
 
 
+
+
+
+
+
+noter = Noter()
+    # print(noter.scan())                       #сканирует папку для записей на актуальное наличие файлов *.json
+# print(noter.add("Helen2", "he is my sister2", "family2")) #создает заметку. Аргументы: 1 = имя, 2 = заметка, 3 = тэг(None по умолчанию)
+    # print(noter.show_content_by_text()) #сканирует папку и выводит актуальный словарь типа имя:заметка
+    # print(noter.show_content_by_tag())    #сканирует папку и выводит актуальный словарь типа имя:тэг
+    # print(noter.delete("cat"))                #удаляет запись по имени
+# print(noter.show_note('Helen'))             # выводит заметку с тэгом по имени
+    # print(noter.add_tag('bfff', 'fr')) # дописывает тэг
+    # # print(noter.edit("car", "VV T-roc", "T")) # редактирует / перезаписывает заметку. Логика дозаписи: show_note() -> edit()
+    # print(noter.find_by_text("brot")) # сканирует текст заметок на совпадение, выдает словарь типа имя:заметка
+    # print(noter.sort_by_tag("friend"))  # сканирует имена и теги, выдает список фалов с совпадениями в алфавитном порядке
