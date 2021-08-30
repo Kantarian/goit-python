@@ -1,5 +1,7 @@
 from pathlib import Path
 import json
+import pickle
+import difflib
 
 
 class Noter:
@@ -75,19 +77,6 @@ class Noter:
         except FileNotFoundError:
             return f"Record '{name}' doesn`t exist. Check content and try again"
 
-    def show_note_dict (self, name): # выводит заметку с тэгом по имени
-        res_dic = {}
-        file = Path(f"{Noter.FOLDER}{name}.json")
-        try:
-            with open(file, "r") as f:
-                note = json.load(f)
-            for key, value in note.items():
-                name_f = key
-                text = value
-            return  {name_f:text}
-        except FileNotFoundError:
-            return f"Record '{name}' doesn`t exist. Check content and try again"
-
     def edit(self, name, text, tag):  # редактирует / перезаписывает заметку. Логика дозаписи: show_note() -> edit()
         res_dic = {}
         file = Path(f"{Noter.FOLDER}{name}.json")
@@ -100,7 +89,19 @@ class Noter:
             return f"Record '{name}' doesn`t exist. Check content and try again"
 
     def add_tag(self, name, tag):  # дописывает тэг
-        pass
+        res_dic = {}
+        file = Path(f"{Noter.FOLDER}{name}.json")
+        try:
+            with open(file, "r") as f:
+                res_dic = json.load(f)
+                for key in res_dic.keys():
+                    k = key
+                res_dic[k] = tag
+            with open(file, "w") as f:
+                json.dump(res_dic, f)
+            return f"Tag '{tag}' was added to '{name}'"
+        except FileNotFoundError:
+            return f"Record '{name}' doesn`t exist. Check content and try again"
 
 
     def find_by_text(self, req):  # сканирует текст заметок на совпадение, выдает словарь типа имя:заметка
@@ -141,20 +142,57 @@ class Noter:
 
 
 
+if __name__ == "__main__":
+    commands = ["add", "exit", "delete", "show", "find"]
+    prediction_experience = {}
+    noter = Noter()
+    try:
+        with open("experience.dat", "rb") as f:
+            prediction_experience = pickle.load(f)
+    except FileNotFoundError:
+        prediction_experience = {}
+    while True:
+        command = str(input("Enter command:>> ")).lower()
+        if not command in commands:
+            answer = ""
+            while answer != "y":
+                if command in commands:
+                    break
+                for key, value in prediction_experience.items():
+                    if command in key:
+                        print(f"(d)Perhaps you mean {prediction_experience[key]}")
+                        answer = str(input("Answer (Y/N): ")).lower()
+                        if answer == "n":
+                            command = str(input("Command input error, try again: ")).lower()
+                        elif answer == "y":
+                            command = prediction_experience[key]
+                            break
+                if not command in commands:
+                    result = str(difflib.get_close_matches(command, commands, cutoff=0.1, n=1))[2:-2]
+                    print(f"Perhaps you mean {result}")
+                    answer = str(input("Answer (Y/N): ")).lower()
+                    if answer == "n":
+                        command = str(input("Command input error, try again: ")).lower()
+                    elif answer == "y":
+                        prediction_experience[command] = result
+                        command = result
+        if command == "add":
+            print("Creating a note...")
+            name = str(input("Enter name:> "))
+            text = str(input("Enter text:> "))
+            answer = str(input("Do you need tags recording now (Y/N):> ")).lower()
+            if answer == "y":
+                tags = str(input("Enter tags:> "))
+                print(noter.add(name, text, tags))
+            print(noter.add(name, text))
+        if command == "show":
+            print("Choosing the note to show...")
+            name = str(input("Enter name:> "))
+            print(noter.show_note(name))
+        if command == "exit":
+            print("Good buy!")
+            with open("experience.dat", "wb") as f:
+                pickle.dump(prediction_experience, f)
+            break
 
-
-
-
-noter = Noter()
-#print(noter.scan())                       #сканирует папку для записей на актуальное наличие файлов *.json
-#print(noter.add("bro2", "he is my brother too", "friend")) #создает заметку. Аргументы: 1 = имя, 2 = заметка, 3 = тэг(None по умолчанию)
-#print(noter.show_content_by_text()) #сканирует папку и выводит актуальный словарь типа имя:заметка
-#print(noter.show_content_by_tag())    #сканирует папку и выводит актуальный словарь типа имя:тэг
-#print(noter.delete("cat"))                #удаляет запись по имени
-#print(noter.show_note('car'))             # выводит заметку с тэгом по имени
-print(noter.show_note_dict('car'))             # выводит заметку с тэгом по имени
-print(noter.add_tag('dog ', 'friend')) # дописывает тэг
-#print(noter.edit("car", "VV T-roc", "T")) # редактирует / перезаписывает заметку. Логика дозаписи: show_note() -> edit()
-#print(noter.find_by_text("brot")) # сканирует текст заметок на совпадение, выдает словарь типа имя:заметка
-#print(noter.sort_by_tag("friend"))  # сканирует имена и теги, выдает список фалов с совпадениями в алфавитном порядке
 
