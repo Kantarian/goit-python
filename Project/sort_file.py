@@ -37,7 +37,6 @@ REGISTERED_EXTENSIONS = {
     'TAR': ARCHIVES,
 }
 
-
 def get_extensions(file_name) -> str:
     return Path(file_name).suffix[1:].upper()
 
@@ -159,7 +158,7 @@ def deleate_folder(folder: Path):
         pass
 
 
-def main(folder):
+def start(folder):
     folder = Path(folder)
     scan(folder)
 
@@ -184,10 +183,3 @@ def main(folder):
     for f in FOLDERS:
         deleate_folder(f)
 
-
-if __name__ == '__main__':
-
-    input_arg = input('Enter the directory for sorting ')
-    sort_folder = Path(input_arg)
-
-    main(sort_folder)

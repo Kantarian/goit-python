@@ -7,6 +7,7 @@ import re
 class AddressBook(UserDict):
     def add_record(self, name, record):
         self.data[name] = record
+        print(self.data[name])
 
     def iterator(self, n=None):
         # returns a view for 'n' records in one iteration
@@ -39,7 +40,7 @@ class Record:
         self.phones = []
         self.birthday = birthday
 
-    def __add__(self, phone):
+    def __add__(self, phone, email = None):
         self.phones.append(phone)
         return self
 
@@ -96,6 +97,7 @@ class Phone(Field):
         else:
             self.__value = new_phone
 
+
 class Email(Field):
     def __init__(self, email):
         self.value = email
@@ -106,12 +108,13 @@ class Email(Field):
 
     @value.setter
     def value(self, new_email):
-        SAN_EMAIL = '([a-zA-Z][a-zA-Z1-9._]{1,}@[a-zA-Z]+\.[a-zA-Z]{2,}\b)'
+        SAN_EMAIL = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
         if not re.search(SAN_EMAIL, str(new_email)):
             raise ValueError(
                 f'This email "{new_email}" is not correct.\n')
         else:
             self.__value = new_email
+
 
 class Birthday(Field):
 
