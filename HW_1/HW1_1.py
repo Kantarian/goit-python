@@ -1,20 +1,39 @@
-class Meta(type):
-
-    def __init__(cls, name, bases, attrs):
-        cls.class_number = Meta.children_number
-        Meta.children_number += 1
-        super(Meta, cls).__init__(name, bases, attrs)
-
-    children_number = 0
+from abc import ABC, abstractmethod
+import pickle
+import json
 
 
-class Cls1(metaclass=Meta):
 
-    def __init__(self, data):
-        self.data = data
+class SerializationInterface(ABC):
+
+    @abstractmethod
+    def dump(self, data, name):
+        pass
+
+    @abstractmethod
+    def load(self, name):
+        pass
 
 
-class Cls2(metaclass=Meta):
+class PickleSerialization(SerializationInterface):
 
-    def __init__(self, data):
-        self.data = data
+    def dump(self, data, name):
+        with open(name, "wb") as f:
+            pickle.dump(data, f)
+
+    def load(self, name):
+        with open(name, "rb") as f:
+            data = pickle.load(f)
+        return data
+
+
+class JSONSerialization(SerializationInterface):
+
+    def dump(self, data, name):
+        with open(name, "w") as f:
+            json.dump(data, f)
+
+    def load(self, name):
+        with open(name, "r") as f:
+            data = json.load(f)
+        return data
