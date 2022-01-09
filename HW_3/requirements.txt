@@ -1,0 +1,8 @@
+contact_book @ file:///C:/goit/goit-python/Part 2/HW3/contact_book.py
+sort_file @ file:///C:/goit/goit-python/Part 2/HW3/sort_file.py
+Noter @ file:///C:/goit/goit-python/Part 2/HW3/Noter.py
+pickleshare==0.7.5
+difflib==2.1
+regex==2021.9.24
+pathlib==1.0.1
+logging==0.4.9.6
